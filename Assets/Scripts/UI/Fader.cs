@@ -17,8 +17,10 @@ public class Fader : MonoBehaviour
 
     private void SetInitialFadeState()
     {
+        fadeImage.gameObject.SetActive(false);
+        fadeText.enabled = false;
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, 0);
-        fadeImage.raycastTarget = false; // Disable raycast at start
+        fadeImage.raycastTarget = false;
     }
 
     public void SetFadeMessage(string message)
@@ -26,19 +28,33 @@ public class Fader : MonoBehaviour
         fadeText.text = message;
     }
 
+    public void SetTextColor(Color textColor)
+    {
+        fadeText.color = textColor;
+    }
+
     public void FadeOut(Action onComplete)
     {
+        fadeImage.gameObject.SetActive(true);
+        fadeText.enabled = true;
         StartCoroutine(Fade(1, onComplete));
     }
 
     public void FadeIn(Action onComplete)
     {
-        StartCoroutine(Fade(0, onComplete));
+        fadeImage.gameObject.SetActive(true);
+        fadeText.enabled = true;
+        StartCoroutine(Fade(0, () =>
+        {
+            onComplete?.Invoke();
+            fadeImage.gameObject.SetActive(false);
+            fadeText.enabled = false;
+        }));
     }
 
     private IEnumerator Fade(float targetAlpha, Action onComplete)
     {
-        fadeImage.raycastTarget = true; // Enable raycast when fading
+        fadeImage.raycastTarget = true;
 
         float alpha = fadeImage.color.a;
         while (!Mathf.Approximately(alpha, targetAlpha))
@@ -48,7 +64,7 @@ public class Fader : MonoBehaviour
             yield return null;
         }
 
-        fadeImage.raycastTarget = targetAlpha == 1; // Keep raycast only when fully visible
+        fadeImage.raycastTarget = targetAlpha == 1;
         onComplete?.Invoke();
     }
 }
