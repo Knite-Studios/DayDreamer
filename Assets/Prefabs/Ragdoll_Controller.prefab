@@ -5119,6 +5119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2927260578417286769}
   - component: {fileID: 1934871942671077716}
+  - component: {fileID: 1943795556849738870}
   m_Layer: 8
   m_Name: Ragdoll_Controller
   m_TagString: Untagged
@@ -5190,6 +5191,14 @@ MonoBehaviour:
   ignoreGroundCheckOn:
     serializedVersion: 2
     m_Bits: 768
+--- !u!81 &1943795556849738870
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547333251807285770}
+  m_Enabled: 1
 --- !u!1 &8577072388309820121
 GameObject:
   m_ObjectHideFlags: 0
