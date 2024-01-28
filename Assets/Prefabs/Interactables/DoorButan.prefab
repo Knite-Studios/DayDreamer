@@ -452,6 +452,8 @@ MonoBehaviour:
   teleportTarget: {fileID: 0}
   player: {fileID: 0}
   interactableObject: {fileID: 0}
+  teleportSound: {fileID: 8300000, guid: bc0935197f65b344abc7748ec207f9b3, type: 3}
+  soundDelay: 0.5
 --- !u!1 &7619903940003549944
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPanel: {fileID: 0}
   uiText: {fileID: 0}
-  interactionSound: {fileID: 0}
+  interactionSound: {fileID: 8300000, guid: 2515805c56a880045aaff955346f4a20, type: 3}
 --- !u!114 &6577966150431411498
 MonoBehaviour:
   m_ObjectHideFlags: 0
