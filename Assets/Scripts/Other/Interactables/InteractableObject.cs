@@ -7,6 +7,9 @@ public class InteractableObject : MonoBehaviour
 {
     [SerializeField] private GameObject uiPanel;
     [SerializeField] private TMP_Text uiText;
+    [SerializeField] private AudioClip interactionSound; // The sound effect for interaction
+
+    private AudioSource audioSource;
     private IButtonAction buttonAction;
     private bool isPlayerInRange = false;
 
@@ -16,6 +19,7 @@ public class InteractableObject : MonoBehaviour
         if (uiText != null) uiText.gameObject.SetActive(false);
 
         buttonAction = GetComponent<IButtonAction>();
+        audioSource = GetComponent<AudioSource>();
         Debug.Log(gameObject.name + " initialized, waiting for player...");
     }
 
@@ -23,11 +27,19 @@ public class InteractableObject : MonoBehaviour
     {
         if (isPlayerInRange)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            // Check for left click (mouse button 0) or right click (mouse button 1)
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             {
                 buttonAction?.ExecuteAction();
-                Debug.Log("Player pressed E to interact with " + gameObject.name);
-                // ResetInteraction();
+                Debug.Log("Player clicked to interact with " + gameObject.name);
+
+                // Play the interaction sound effect if it's set
+                if (interactionSound != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(interactionSound);
+                }
+
+                ResetInteraction();
             }
         }
     }

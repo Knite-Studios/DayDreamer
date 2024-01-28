@@ -6,7 +6,9 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private Vector3 openPositionOffset; // The offset from the original position when the door is open
     [SerializeField] private float moveDuration = 2.0f; // Duration to open/close the door
+    [SerializeField] private AudioClip doorOpenSound; // The sound effect for the door opening
 
+    private AudioSource audioSource; // AudioSource component for playing sounds
     private bool isOpen = false;
     private Vector3 closedPosition; // The original position of the door (when closed)
     private Coroutine moveCoroutine; // Reference to the current moving coroutine
@@ -15,6 +17,13 @@ public class Door : MonoBehaviour
     {
         // Initialize the closed position
         closedPosition = transform.position;
+
+        // Get or add the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     public void ToggleDoor()
@@ -26,6 +35,12 @@ public class Door : MonoBehaviour
         else
         {
             MoveDoor(closedPosition + openPositionOffset);
+
+            // Play the door opening sound effect if it's set
+            if (doorOpenSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(doorOpenSound);
+            }
         }
         isOpen = !isOpen;
     }
